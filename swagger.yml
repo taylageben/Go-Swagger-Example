@@ -1,0 +1,268 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: To-do Demo
+  description: |-
+    ## Welcome
+
+    This is a place to put general notes and extra information, for internal use.
+
+    To get started designing/documenting this API, select a version on the left. ## Welcome
+
+    This is a place to put general notes and extra information, for internal use.
+
+    To get started designing/documenting this API, select a version on the left.
+host: todos.stoplight.io
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  apikey:
+    name: apikey
+    type: apiKey
+    in: query
+paths:
+  '/todos/{todoId}':
+    parameters:
+      - name: todoId
+        in: path
+        required: true
+        type: string
+    get:
+      operationId: get_todo
+      summary: Get Todo
+      tags:
+        - Todos
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/todo-full'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+    put:
+      operationId: put_todos
+      summary: Update Todo
+      tags:
+        - Todos
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/todo-partial'
+            example:
+              name: my todo's new name
+              completed: false
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/todo-full'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          description: ''
+          schema:
+            type: object
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - apikey: []
+    delete:
+      operationId: delete_todo
+      summary: Delete Todo
+      tags:
+        - Todos
+      responses:
+        '204':
+          description: ''
+          schema:
+            type: object
+            properties: {}
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - apikey: []
+  /todos:
+    post:
+      operationId: post_todos
+      summary: Create Todo
+      tags:
+        - Todos
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/todo-partial'
+            example:
+              name: my todo's name
+              completed: false
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/todo-full'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          description: ''
+          schema:
+            type: object
+            properties: {}
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - apikey: []
+    get:
+      operationId: get_todos
+      summary: List Todos
+      tags:
+        - Todos
+      parameters:
+        - name: limit
+          in: query
+          description: This is how it works.
+          required: false
+          type: integer
+          maximum: 100
+        - name: skip
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/todo-full'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+              - apikey: []
+  /mocked:
+    get:
+      operationId: get_mocked
+      summary: Mock Example
+      tags:
+        - Misc
+      description: |-
+        This is an example of a mocked endpoint.
+
+        This endpoint does not actually exist in the api - try visiting [http://todos.stoplight.io/mocked](http://todos.stoplight.io). You will see the default response (same as you get when you visit the root "/" url).
+
+        We have defined a 200 response below, with an example, and then explicitly turned on mocking for this endpoint via the dropdown in the right sidebar.
+
+        With this enabled, if you visit {your prism instance host}/mocked, you'll see the mocked example. You can find the mock server host for this API by clicking the "Design Dashboard" button at the top of this screen. You can also try sending a test request by clicking "send test request" button in the right sidebar.
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              this:
+                type: string
+              mocked:
+                type: boolean
+parameters:
+  'trait:paged:limit':
+    name: limit
+    in: query
+    description: This is how it works.
+    required: false
+    type: integer
+    maximum: 100
+  'trait:paged:skip':
+    name: skip
+    in: query
+    required: false
+    type: string
+responses:
+  'trait:standardErrors:401':
+    description: ''
+    schema:
+      type: object
+  'trait:standardErrors:403':
+    description: ''
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  'trait:standardErrors:404':
+    description: ''
+    schema:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+      required:
+        - status
+        - error
+  'trait:standardErrors:500':
+    description: ''
+    schema:
+      type: object
+definitions:
+  todo-full:
+    title: Todo Full
+    allOf:
+      - $ref: '#/definitions/todo-partial'
+      - type: object
+        properties:
+          id:
+            type: integer
+          completed_at:
+            type:
+              - string
+              - 'null'
+            format: date-time
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+        required:
+          - id
+  todo-partial:
+    title: Todo Partial
+    type: object
+    properties:
+      name:
+        type: string
+      completed:
+        type:
+          - boolean
+          - 'null'
+    required:
+      - name
