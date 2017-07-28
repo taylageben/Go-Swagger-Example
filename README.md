@@ -37,9 +37,7 @@ I have implemented this response in the configure file to return a stubbed todo 
 ### Request
 ```bash
 $ curl -i http://127.0.0.1:8080/todos/1
-```
-### Response
-```bash
+
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Thu, 27 Jul 2017 14:05:30 GMT
@@ -53,9 +51,7 @@ This request requires an api-key to be present in the query. (This is handled in
 ### Request (without the key)
 ```bash
 $ curl -i http://127.0.0.1:8080/todos
-```
-### Response
-```bash
+
 HTTP/1.1 401 Unauthorized
 Content-Type: application/json
 Date: Thu, 27 Jul 2017 14:09:23 GMT
@@ -66,9 +62,7 @@ Content-Length: 64
 ### Request (with the key)
 ```bash
 $ curl -i http://127.0.0.1:8080/todos?apikey=123
-```
-### Response
-```bash
+
 HTTP/1.1 501 Not Implemented
 Content-Type: application/json
 Date: Thu, 27 Jul 2017 14:09:41 GMT
