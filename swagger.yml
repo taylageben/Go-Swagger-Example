@@ -241,17 +241,21 @@ definitions:
         properties:
           id:
             type: integer
+            x-go-custom-tag: db:"id"
           completed_at:
             type:
               - string
               - 'null'
             format: date-time
+            x-go-custom-tag: db:"completed_at"
           created_at:
             type: string
             format: date-time
+            x-go-custom-tag: db:"created_at"
           updated_at:
             type: string
             format: date-time
+            x-go-custom-tag: db:"updated_at"
         required:
           - id
   todo-partial:
@@ -260,9 +264,11 @@ definitions:
     properties:
       name:
         type: string
+        x-go-custom-tag: db:"name"
       completed:
         type:
           - boolean
           - 'null'
+        x-go-custom-tag: db:"completed"
     required:
       - name
