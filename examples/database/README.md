@@ -45,17 +45,25 @@
 ## Post Todo
 
 ```bash
-$ curl -H "Content-Type: application/json" -X POST -d '{"name":"test","completed":false}' http://localhost:8080/todos?apikey=123
+$ curl -H "Content-Type: application/json" -X POST -d '{"name":"test","completed":false}' -i http://localhost:8080/todos?apikey=123
 
+HTTP/1.1 201 Created
+Content-Type: application/json
+Date: Sun, 30 Jul 2017 20:11:37 GMT
+Content-Length: 155
 
-{"name":"test","completed_at":"0001-01-01T00:00:00.000Z","created_at":"2017-07-30T21:56:55.192+02:00","id":1,"updated_at":"2017-07-30T21:56:55.192+02:00"}
+{"name":"test","completed_at":"0001-01-01T00:00:00.000Z","created_at":"2017-07-30T22:11:36.998+02:00","id":2,"updated_at":"2017-07-30T22:11:36.998+02:00"}
 ```
 
 ## Get Todo
 
 ```bash
-$ curl http://localhost:8080/todos/1
+$ curl -i http://localhost:8080/todos/2
 
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sun, 30 Jul 2017 20:12:41 GMT
+Content-Length: 155
 
-{"name":"test","completed_at":"0001-01-01T00:00:00.000Z","created_at":"2017-07-30T21:56:55.192+02:00","id":1,"updated_at":"2017-07-30T21:56:55.192+02:00"}
+{"name":"test","completed_at":"0001-01-01T00:00:00.000Z","created_at":"2017-07-30T22:11:36.998+02:00","id":2,"updated_at":"2017-07-30T22:11:36.998+02:00"}
 ```
