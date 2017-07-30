@@ -33,7 +33,7 @@
     **NB!** Once you have customized Main, any regeneration of the API **MUST** include the `--exclude-main` flag:
     
     ```bash
-    swagger generate server --target ./examples/database/ --name  --spec ../swagger.yml --exclude-main
+    swagger generate server --target ./examples/database/ --spec ./swagger.yml --exclude-main
     ```
     
 4.  Add your db functionality
